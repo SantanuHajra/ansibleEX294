@@ -1,0 +1,17 @@
+---
+- name: Create a playbook like /etc/hosts
+  hosts: all
+  tasks:
+    - name: copy j2 file in destination
+      ansible.builtin.copy:
+        src: host_practice.j2
+        dest: /etc/myhosts_30_last 
+    - name: do a lineinfile
+      ansible.builtin.lineinfile:
+        path: /etc/myhosts_30_last
+        line: '{{hostvars[item].ansible_default_ipv4.address}} {{hostvars[item].ansible_fqdn}} {{hostvars[item].ansible_hostname}}'
+        state: present
+      loop: "{{ groups.all }}"
+      when: inventory_hostname in groups ['dev']       
+
+...

@@ -1,0 +1,19 @@
+---
+- name: Create a playbook in dev, test
+  hosts: dev,test
+  vars_files:
+    - locker_practice.yml  
+    - user_list_practice.yml  
+  tasks:
+    - name: Create a group devops
+      ansible.builtin.group: 
+        name: devops
+        state: present
+    - name: create users and give password
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        group: devops
+        password: "{{ PW_developer| password_hash('sha512') }}"
+        password_expire_max: 30  
+      loop: "{{ myusers }}"    
+      when: item.job == 'developer'   

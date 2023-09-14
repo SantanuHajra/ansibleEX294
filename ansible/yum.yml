@@ -1,0 +1,24 @@
+--- 
+- name: Create Repo  
+  hosts: server1
+  tasks:
+    - name: Create Base Repo
+      ansible.builtin.yum_repository:
+        file: new
+        baseurl: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+        name: EX294_BASE
+        description: Base Repo  
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: http://server.network.example.com/RHEL/RPM-GPG-KEY-redhat-release
+        state: present  
+
+    - name: Create another repo
+      ansible.builtin.yum_repository:
+        baseurl: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+        name: EX294_STREM
+        description: EX294 App stream
+        enabled: 1
+        gpgcheck: 1 
+        gpgkey: http://server.network.example.com/RHEL/RPM-GPG-KEY-redhat-release   
+        state: present  

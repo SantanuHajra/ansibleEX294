@@ -1,0 +1,8 @@
+- name: Manage timesync with server
+  hosts: server1
+  vars:
+    timesync_ntp_servers:
+      - hostname: 172.24.1.254
+        iburst: true
+  roles:
+    - linux-system-roles.timesync

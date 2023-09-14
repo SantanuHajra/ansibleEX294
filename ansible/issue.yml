@@ -1,0 +1,9 @@
+---
+- name: Playbook to run on all managed hosts
+  hosts: all
+  tasks:
+    - name: Replace Development server file
+      copy:
+        content: Development
+        dest: /etc/issue
+      when: inventory_hostname in groups['dev']      

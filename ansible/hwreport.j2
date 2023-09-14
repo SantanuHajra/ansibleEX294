@@ -1,0 +1,9 @@
+Inventory Hostname = {{ansible_fqdn}}
+Total Memory = {{ansible_memtotal_mb}}
+size of disk sda = {{ansible_devices.sda.size}}
+{% if ansible_devices.sdb is defined %}
+size of disk sdb = {{ansible_devices.sdb.size}}
+{%else%}
+size of disk sdb = NONE
+{%endif%}
+

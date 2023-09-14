@@ -1,0 +1,12 @@
+---
+- name: Create cronjob
+  hosts: server1
+  tasks:
+    - name: Enable cronjob
+      ansible.builtin.cron:
+        name: Set logger
+        user: natasha
+        job: "logger -p Exam294 is going on"
+        minute: "*/2"
+        state: present  
+          

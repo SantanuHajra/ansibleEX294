@@ -1,0 +1,16 @@
+---
+- name: Install Packages
+  hosts: dev
+  tasks:
+    - name: Install Mariadb, PHP
+      ansible.builtin.yum:
+        name:
+          - mariadb
+          - php
+        state: present
+
+    - name: Update all
+      ansible.builtin.yum:
+        name: '*'
+        state: latest      
+

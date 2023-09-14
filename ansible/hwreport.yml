@@ -1,0 +1,18 @@
+---
+- name: Generate a Hardware Report
+  hosts: server1
+  tasks:
+    - block:
+        - name: This is a block for generate report i
+          ansible.builtin.template:
+            src: gather1.j2
+            dest: /root/hwreport.txt
+        - debug:    
+            msg: Block is executed 
+      rescue: 
+        - name: 2nd task if block gets failed
+          ansible.builtin.template:
+            src: gather2.j2
+            dest: /root/hwreport.txt      
+        - debug:
+            msg: Resue is executed

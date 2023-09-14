@@ -1,0 +1,17 @@
+---
+- name: Create a file like /etc/hosts in dev server
+  hosts: all
+  tasks:
+    - name: template file host_now.j2
+      ansible.builtin.template:
+        src: host_now.j2
+        dest: /etc/myhosts
+      when: inventory_hostname in groups ['dev']    
+
+    - name: Replace with lineinfile
+      ansible.builtin.lineinfile:
+        path: /etc/myhosts
+        line: '{{hostvars[item].ansible_default_ipv4.address}} {{hostvars[item].ansible_fqdn}} {{hostvars[item].ansible_hostname}}'
+        state: present
+      loop: "{{ groups.all }}"  
+      when: inventory_hostname in groups ['dev']    

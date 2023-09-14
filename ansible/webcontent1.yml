@@ -1,0 +1,25 @@
+---
+- name: Webcontent Playbook
+  hosts: server1
+  tasks:
+    - name: Create a Group called webdev
+      ansible.builtin.group:
+        name: webdev
+        state: present
+    - name: Create a directory named webdev
+      ansible.builtin.file:
+        name: /webdev
+        state: directory
+        mode: 02775
+        group: webdev
+    - name: Create a Softlink
+      ansible.builtin.file:
+        src: /webdev     
+        dest: /var/www/html/webdev
+        state: link
+    - name: Create an index.html and display string
+      ansible.builtin.copy:
+        content: development
+        dest: /webdev/index.html 
+        setype: httpd_sys_content_t    
+              

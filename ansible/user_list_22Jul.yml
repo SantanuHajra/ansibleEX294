@@ -1,0 +1,7 @@
+myusers:
+    - name: Deepali
+      job: Developer
+    - name: Antony
+      job: Developer
+    - name: Arnold
+      job: manager    

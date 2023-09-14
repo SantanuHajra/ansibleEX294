@@ -1,0 +1,27 @@
+---
+- name: Install required packages
+  ansible.builtin.yum:
+    name:
+      - httpd
+      - firewalld
+    state: present
+- name: Start HTTPD service
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: true
+- name: Start firewall service
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: true
+- name: Add HTTP in Firewall and enable it
+  ansible.posix.firewalld:
+    service: http
+    state: enabled
+    immediate: yes
+    permanent: yes
+- name: Copy the template file
+  ansible.builtin.template:
+    src: /home/admin/ansible/apache/templates/template.j2
+    dest: /var/www/html/index.html    

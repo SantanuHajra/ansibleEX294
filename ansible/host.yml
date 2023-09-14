@@ -1,0 +1,17 @@
+---
+- name: Template to generate file /etc/myhosts in dev hostgroup
+  hosts: all
+  tasks:
+    - name: Copy host.j2 template in dev group 
+      ansible.builtin.template:
+        src: host.j2
+        dest: /etc/myhosts
+      when: inventory_hostname in groups ['dev']
+
+    - name: Put line for each hosts
+      ansible.builtin.lineinfile:
+        path: /etc/myhosts
+        line: '{{hostvars[item].ansible_default_ipv4.address}} {{hostvars[item].ansible_fqdn}} {{hostvars[item].ansible_hostname}}'
+        state: present
+      loop: '{{ groups.all }}'    
+      when: inventory_hostname in groups ['dev']     

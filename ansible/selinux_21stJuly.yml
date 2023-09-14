@@ -1,0 +1,9 @@
+---
+- name: Enfroce Selinux
+  hosts: all
+  vars:
+    - selinux_state: enforcing
+    - selinux_policy: targeted
+  roles:
+    - role: rhel-system-roles.selinux    
+      become: true

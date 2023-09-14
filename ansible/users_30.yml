@@ -1,0 +1,38 @@
+---
+- name: Create Users and assign password 
+  hosts: dev,test
+  vars_files:
+    - user_list.yml
+    - locker_30.yml
+  tasks:
+    - name: create the group
+      ansible.builtin.group:
+        name: devops
+        state: present
+    - name: Create the Users
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        groups: devops
+        password: "{{ PW_developer | password_hash('sha512') }}"
+        password_expire_max: 30
+      loop: "{{ myusers }}"
+      when: item.job == 'developer'    
+
+- name: Create Users and assign password
+  hosts: prod
+  vars_files:
+    - user_list.yml
+    - locker_30.yml
+  tasks:       
+    - name: create the group
+      ansible.builtin.group:
+        name: opsmgr
+        state: present
+    - name: Create the Users
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        groups: opsmgr
+        password: "{{ PW_manager | password_hash('sha512') }}"
+        password_expire_max: 30
+      loop: "{{ myusers }}"
+      when: item.job == 'manager'        

@@ -1,0 +1,19 @@
+---
+- name: Get .empty file
+  hosts: localhost
+  tasks:
+    - name: Get url
+      ansible.builtin.get_url:
+        url:
+        dest:
+
+- name: Copy
+  hosts: localhost
+  tasks:
+    - name: Copy
+      src: hwreport.empty
+      dest: hwreport.j2
+
+  
+    
+          

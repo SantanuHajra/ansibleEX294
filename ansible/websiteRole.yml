@@ -1,0 +1,5 @@
+---
+- name: Build website with Apache role
+  hosts: server1
+  roles:
+    - apache  

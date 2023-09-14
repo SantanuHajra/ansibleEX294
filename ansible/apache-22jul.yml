@@ -1,0 +1,5 @@
+---
+- name: Install and configure apachw
+  hosts: dev
+  roles:
+   - apache-22July  

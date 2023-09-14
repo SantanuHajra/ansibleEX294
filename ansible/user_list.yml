@@ -1,0 +1,5 @@
+myusers:
+  - name: alex
+    job: developer
+  - name: bob
+    job: manager    

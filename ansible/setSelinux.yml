@@ -1,0 +1,6 @@
+- name: Configure selinux as enforcing mode
+  hosts: all
+  vars:
+    - selinux_state: enforcing 
+  roles:
+    - role: rhel-system-roles.selinux

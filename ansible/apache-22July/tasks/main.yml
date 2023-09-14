@@ -1,0 +1,33 @@
+---
+- name: Install httpd firewalld packages
+  ansible.builtin.yum:
+    name:
+      - httpd
+      - firewalld
+    state: present
+
+- name: Start Firewalld Service
+  ansible.builtin.service:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: Allow HTTPD in Firewalls
+  ansible.posix.firewalld:
+    service: http
+    state: enabled  
+    immediate: yes
+    permanent: yes
+
+- name: Copy the template file
+  ansible.builtin.template:
+    src: index.html.j2
+    dest: /var/www/html/index.html  
+
+- name: Start Httpd service
+  ansible.builtin.service:
+    name: httpd
+    state: started
+    enabled: yes  
+
+...

@@ -1,0 +1,11 @@
+---
+- name: Create a playbook to desired hardware report generation
+  hosts: all
+  tasks:
+    - name: create the playbook
+      ansible.builtin.template:
+        src: hwreport30thJuly.j2
+        dest: /root/hwreport_30thJuly.txt  
+
+
+...

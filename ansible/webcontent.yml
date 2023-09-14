@@ -1,0 +1,25 @@
+---
+- name: Webcontent
+  hosts: server1
+  tasks:
+    - name: create group
+      group:
+        name: webdev
+        state: present  
+    - name: create directory
+      file:
+        name: /webdev
+        state: directory
+        group: webdev
+        mode: 02755
+        setype: httpd_sys_content_t
+    - name: Create content and symbolic Link
+      file:
+        src: /webdev
+        dest: /var/www/html/webdev
+        state: link
+
+    - name: Create Index.html file
+      copy:
+        content: Deployment
+        dest: /var/www/html/webdev/index.html

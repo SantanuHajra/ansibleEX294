@@ -1,0 +1,6 @@
+---
+- name: Use webapache role
+  hosts: all
+  roles:
+    - webapache  
+...

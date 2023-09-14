@@ -1,0 +1,18 @@
+---
+- name: Download one template file and edit it
+  hosts: all
+  tasks: 
+    - name: copy jinja file to dev files
+      ansible.builtin.copy:
+        src: /home/admin/ansible/host.j2
+        dest: /etc/myhosts
+      when: inventory_hostname in groups['dev']    
+
+    - name: change lineinfile
+      ansible.builtin.lineinfile:
+        path: /etc/myhosts
+        line: '{{hostvars[item].ansible_default_ipv4.address}}{{hostvars[item].ansible_fqdn}}{{hostvars[item].ansible_hostname}}'
+        state: present
+      with_items: "{{ groups.all }}"    
+      when: inventory_hostname in groups['dev']        
+...
